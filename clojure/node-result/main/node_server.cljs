@@ -1,0 +1,19 @@
+(ns main.node-server
+  (:require [main.express-server :as express-server]))
+
+(enable-console-print!)
+
+(defn init []
+  (println "Hello, World[NodeJs by Clojure]!")
+)
+
+(defn -main [& args]
+
+  (println "Hello, World in main function!")
+
+  (init)
+
+  (express-server/init)
+)
+
+(set! *main-cli-fn* -main)
