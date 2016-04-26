@@ -2,20 +2,21 @@
 goog.provide('main.node_server');
 goog.require('cljs.core');
 goog.require('main.express_server');
+goog.require('main.mongo_server');
 cljs.core.enable_console_print_BANG_.call(null);
 main.node_server.init = (function main$node_server$init(){
 return cljs.core.println.call(null,"Hello, World[NodeJs by Clojure]!");
 });
 main.node_server._main = (function main$node_server$_main(var_args){
 var args__7286__auto__ = [];
-var len__7279__auto___7344 = arguments.length;
-var i__7280__auto___7345 = (0);
+var len__7279__auto___7513 = arguments.length;
+var i__7280__auto___7514 = (0);
 while(true){
-if((i__7280__auto___7345 < len__7279__auto___7344)){
-args__7286__auto__.push((arguments[i__7280__auto___7345]));
+if((i__7280__auto___7514 < len__7279__auto___7513)){
+args__7286__auto__.push((arguments[i__7280__auto___7514]));
 
-var G__7346 = (i__7280__auto___7345 + (1));
-i__7280__auto___7345 = G__7346;
+var G__7515 = (i__7280__auto___7514 + (1));
+i__7280__auto___7514 = G__7515;
 continue;
 } else {
 }
@@ -31,13 +32,15 @@ cljs.core.println.call(null,"Hello, World in main function!");
 
 main.node_server.init.call(null);
 
-return main.express_server.init.call(null);
+main.express_server.init.call(null);
+
+return main.mongo_server.init.call(null);
 });
 
 main.node_server._main.cljs$lang$maxFixedArity = (0);
 
-main.node_server._main.cljs$lang$applyTo = (function (seq7343){
-return main.node_server._main.cljs$core$IFn$_invoke$arity$variadic(cljs.core.seq.call(null,seq7343));
+main.node_server._main.cljs$lang$applyTo = (function (seq7512){
+return main.node_server._main.cljs$core$IFn$_invoke$arity$variadic(cljs.core.seq.call(null,seq7512));
 });
 cljs.core._STAR_main_cli_fn_STAR_ = main.node_server._main;
 

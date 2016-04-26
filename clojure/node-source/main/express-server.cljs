@@ -7,13 +7,13 @@
 
 (def express (node/require "express"))
 
-(defn say-hello! [req res]
+(defn say-hello [req res]
   (.send res "Hello world!"))
 
 (defn init []
   (println "Hello, World[NodeJs by Clojure - express.cljs]!")
   (let [app (express)]
-    (.get app "/" say-hello!)
+    (.get app "/" say-hello)
     (.listen app 3000 (fn []
                         (println "Server started on port 3000"))))
 )
