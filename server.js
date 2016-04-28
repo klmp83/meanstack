@@ -1,2 +1,2 @@
-require("./clojure/node-result/goog/bootstrap/nodejs");
-require("./clojure/node-result/bootstrap");
+require("./app/server/goog/bootstrap/nodejs");
+require("./app/server/bootstrap");

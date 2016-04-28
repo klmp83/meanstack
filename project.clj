@@ -14,24 +14,25 @@
   :npm {:dependencies [[bluebird "3.3.5"]
                        [source-map-support "0.4.0"]
                        [express "4.11.1"]
-                       [mongodb "2.1.16"]]}
+                       [mongodb "2.1.16"]
+                       [swig "1.4.2"]]}
   ;:source-paths ["src" "target/classes"]
   ;:clean-targets ["out" "release"]
   ;:target-path "target"
   :cljsbuild {
      :builds {
        :nodejs
-       {:source-paths ["clojure/node-source"]
+       {:source-paths ["src/server"]
         :compiler {:main main.node-server
-                   :output-to "clojure/node-result/bootstrap.js"
-                   :output-dir "clojure/node-result"
+                   :output-to "app/server/bootstrap.js"
+                   :output-dir "app/server"
                    :target :nodejs
                    }}
 
        :web
-       {:source-paths ["clojure/web-source"]
-        :compiler {:output-to "clojure/web-result/bootstrap.js"
-                   :output-dir "clojure/web-result"
+       {:source-paths ["src/client"]
+        :compiler {:output-to "app/client/bootstrap.js"
+                   :output-dir "app/client/"
                    ;:externs ["https://cdnjs.cloudflare.com/ajax/libs/systemjs/0.19.26/system.js"]
                    ;:foreign-libs [{:file "https://cdnjs.cloudflare.com/ajax/libs/systemjs/0.19.26/system.js" :provides ["System"]}]
                    }}
