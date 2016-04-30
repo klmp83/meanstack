@@ -5,8 +5,8 @@ import {HeroService} from './hero.service';
 
 @Component({
   selector: 'my-dashboard',
-  templateUrl: 'app/dashboard.component.html',
-  styleUrls: ['app/dashboard.component.css']
+  templateUrl: 'app/template/dashboard.component.html',
+  styleUrls: ['app/css/dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
   heroes: Hero[] = [];
@@ -18,6 +18,7 @@ export class DashboardComponent implements OnInit {
   }
 
   gotoDetail(hero: Hero) {
+    //this._router.navigate(['SnsLoginCallback', {type: "twitter"}])
     let link = ['HeroDetail', { id: hero.id }];
     this._router.navigate(link);
   }

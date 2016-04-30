@@ -1,13 +1,24 @@
 // By JunWhan
 var express = require('express'); // for server
 var app = express(); // variable to use express
+var session = require('express-session');
+var FileStore = require('session-file-store')(session);
 var path = require('path'); //
 var swig = require('swig');// swig engine for change pages
+var twitter = require('./twitter-access')
+
+app.use("/app", express.static(__dirname + "/app"));
+app.use(session({
+    name: 'server-session-cookie-id',
+    secret: 'ASDCxcvLAxcvSJKFL389379&*(*&^%$)ASASasdkbvKLJDF334',
+    saveUninitialized: true,
+    resave: true,
+    store: new FileStore({path: "./app/server/sessions/", useAsync: true})
+}));
 
 app.engine('html', swig.renderFile); //setting engine as swig
 app.set('view engine', 'html'); //view engine as html-swig
-app.set('views', path.resolve('.')); //view default (+ .)
-app.use("/app", express.static(__dirname + "/app"));
+app.set('views', path.resolve('./')); //view default (+ .)
 
 var server = app.listen(8081, function () { //seting server app to port
 
@@ -17,16 +28,17 @@ var server = app.listen(8081, function () { //seting server app to port
     console.log("Example app listening at http://%s:%s", host, port)
 });
 
+// 1. index page
 app.get('/', function (req, res) { //call / -> index engine
     res.render('index', {
         // user: req.user || null
     });
 });
 
+// 2. basic call from client
 app.get('/api', function (req, res) {
     res.send({id: 3, name: "Yu", age: 18}); //sending data
 });
-
 app.post('/api/heroes', function (req, res) {
     res.send({data: [
         {"id": 11, "name": "Mr. Nice"},
@@ -40,4 +52,22 @@ app.post('/api/heroes', function (req, res) {
         {"id": 19, "name": "Magma"},
         {"id": 20, "name": "Tornado"}
     ]}); //sending data
+});
+
+// 3. sns authentication call
+app.get('/login/twitter', function(req, res){
+    twitter.authTwitter(req,res);
+});
+
+app.get('/login/twitter/access-token', function(req, res){
+    var oauth_token = req.query.oauth_token;
+    var oauth_verifier = req.query.oauth_verifier;
+    console.log(oauth_token + "###########" + oauth_verifier);
+    twitter.getAccessTokenTwitter(req, res);
+   // twitter.authTwitter(req,res);
+});
+
+
+app.post('/api/sns/timeLine/twitter', function(req, res){
+    twitter.getUserTimeLine(req, res);
 });

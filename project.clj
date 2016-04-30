@@ -14,8 +14,13 @@
   :npm {:dependencies [[bluebird "3.3.5"]
                        [source-map-support "0.4.0"]
                        [express "4.11.1"]
+                       [express-session "1.13.0"]
+                       [session-file-store "0.2.0"]
                        [mongodb "2.1.16"]
-                       [swig "1.4.2"]]}
+                       [swig "1.4.2"]
+                       [twitter "1.2.5"]
+                       [oauth "0.9.14"]
+                       ]}
   ;:source-paths ["src" "target/classes"]
   ;:clean-targets ["out" "release"]
   ;:target-path "target"
