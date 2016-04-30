@@ -6,6 +6,20 @@ var FileStore = require('session-file-store')(session);
 var path = require('path'); //
 var swig = require('swig');// swig engine for change pages
 var twitter = require('./twitter-access')
+var https = require('https');
+var fs = require('fs');
+
+// openssl genrsa -out hacksparrow-key.pem 1024
+// openssl req -new -key hacksparrow-key.pem -out certrequest.csr
+// openssl x509 -req -in certrequest.csr -signkey hacksparrow-key.pem -out hacksparrow-cert.pem
+
+var hskey = fs.readFileSync('app/cert/hacksparrow-key.pem');
+var hscert = fs.readFileSync('app/cert/hacksparrow-cert.pem');
+
+var options = {
+    key: hskey,
+    cert: hscert
+};
 
 app.use("/app", express.static(__dirname + "/app"));
 app.use(session({
@@ -20,6 +34,7 @@ app.engine('html', swig.renderFile); //setting engine as swig
 app.set('view engine', 'html'); //view engine as html-swig
 app.set('views', path.resolve('./')); //view default (+ .)
 
+https.createServer(options, app).listen(8000);
 var server = app.listen(8081, function () { //seting server app to port
 
     var host = server.address().address;
@@ -66,7 +81,6 @@ app.get('/login/twitter/access-token', function(req, res){
     twitter.getAccessTokenTwitter(req, res);
    // twitter.authTwitter(req,res);
 });
-
 
 app.post('/api/sns/timeLine/twitter', function(req, res){
     twitter.getUserTimeLine(req, res);
