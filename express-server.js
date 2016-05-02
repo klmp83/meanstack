@@ -3,9 +3,12 @@ var express = require('express'); // for server
 var app = express(); // variable to use express
 var session = require('express-session');
 var FileStore = require('session-file-store')(session);
-var path = require('path'); //
+var path = require('path');
 var swig = require('swig');// swig engine for change pages
-var twitter = require('./twitter-access')
+
+var twitter = require('./twitter-access');
+var google = require('./google-access');
+
 var https = require('https');
 var fs = require('fs');
 
@@ -29,6 +32,8 @@ app.use(session({
     resave: true,
     store: new FileStore({path: "./app/server/sessions/", useAsync: true})
 }));
+app.use(google.passport.initialize());
+app.use(google.passport.session());
 
 app.engine('html', swig.renderFile); //setting engine as swig
 app.set('view engine', 'html'); //view engine as html-swig
@@ -70,10 +75,10 @@ app.post('/api/heroes', function (req, res) {
 });
 
 // 3. sns authentication call
+// 3.1. Twitter oauth 1.0 authentication
 app.get('/login/twitter', function(req, res){
     twitter.authTwitter(req,res);
 });
-
 app.get('/login/twitter/access-token', function(req, res){
     var oauth_token = req.query.oauth_token;
     var oauth_verifier = req.query.oauth_verifier;
@@ -84,4 +89,20 @@ app.get('/login/twitter/access-token', function(req, res){
 
 app.post('/api/sns/timeLine/twitter', function(req, res){
     twitter.getUserTimeLine(req, res);
+});
+
+// 3.2. Google Plus oauth 2.0 authentication using passport
+app.get('/login/google', google.passport.authenticate('google', { scope: [
+    'https://www.googleapis.com/auth/plus.login',
+    'https://www.googleapis.com/auth/plus.profile.emails.read']
+}));
+app.get('/login/google/callback',
+    google.passport.authenticate('google', {
+        successRedirect: '/#/sns-login-callback/google',
+        failureRedirect: '/#/fail'
+    })
+);
+
+app.post('/api/sns/timeLine/google', function(req, res){
+    google.getUserTimeLine(req, res);
 });

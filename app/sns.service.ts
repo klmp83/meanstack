@@ -5,13 +5,13 @@ import {Observable} from "rxjs/Rx";
 @Injectable()
 export class SnsService {
     constructor (private http: Http) {}
-    private _timeLineUrl = "/api/sns/timeLine/twitter";  // URL to web api
+    private _timeLineUrl = "/api/sns/timeLine/";  // URL to web api
 
-    getSnsTimeLines() {
+    getSnsTimeLines(type: string) {
         let body = JSON.stringify({ "id": 99 });
         let headers = new Headers({ 'Content-Type': 'application/json' });//headers.append('Content-Type', 'application/x-www-form-urlencoded');
         let options = new RequestOptions({ headers: headers });
-        return this.http.post(this._timeLineUrl, body, options)
+        return this.http.post(this._timeLineUrl + type, body, options)
           .toPromise()
           .then(this.extractData)
           .catch(this.handleError);

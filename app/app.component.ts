@@ -16,7 +16,9 @@ import {HeroService} from './hero.service';
       <a [routerLink]="['Heroes']">Heroes</a>
       <!--<a [routerLink]="['SnsLoginCallback']">Twitter Login</a>-->
       <a href="/login/twitter">Twitter Login</a>
-      <a [routerLink]="['SnsTimeLine']">Twitter Time Line</a>
+      <a href="/login/google">Google Plusc Login</a>
+      <a href="/#/sns-timeLine/twitter">Twitter Time Line</a>
+      <a href="/#/sns-timeLine/google">Google Plus Time Line</a>
     </nav>
     <router-outlet></router-outlet>
   `,
@@ -30,7 +32,7 @@ import {HeroService} from './hero.service';
     {path: '/heroes', name: 'Heroes', component: HeroesComponent},
     {path: '/detail/:id', name: 'HeroDetail', component: HeroDetailComponent},
     {path: '/sns-login-callback/:type', name: 'SnsLoginCallback', component: SnsLoginCallbackComponent}
-    {path: '/sns-timeLine/twitter', name: 'SnsTimeLine', component: SnsTimeLineComponent}
+    {path: '/sns-timeLine/:type', name: 'SnsTimeLine', component: SnsTimeLineComponent}
 ])
 export class AppComponent {
   title = 'Tour of Heroes';

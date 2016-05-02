@@ -20,7 +20,9 @@
                        [swig "1.4.2"]
                        [twitter "1.2.5"]
                        [oauth "0.9.14"]
-                       ]}
+                       [passport "0.3.2"]
+                       [passport-google-oauth "1.0.0"]
+                       [googleapis "5.2.1"]]}
   ;:source-paths ["src" "target/classes"]
   ;:clean-targets ["out" "release"]
   ;:target-path "target"

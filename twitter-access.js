@@ -59,8 +59,8 @@ var getAccessTokenTwitter = function (req, res) {
             console.log(oauth_access_token);
             console.log(oauth_access_token_secret, oauth_access_token_secret);
 
-            req.session.oauth_access_token = oauth_access_token;
-            req.session.oauth_access_token_secret = oauth_access_token_secret;
+            req.session.oauth_access_token_twitter = oauth_access_token;
+            req.session.oauth_access_token_secret_twitter = oauth_access_token_secret;
 
             res.redirect('http://localhost:8081/#/sns-login-callback/twitter');
             //res.redirect('https://twitter.com/oauth/authenticate?oauth_access_token='+oauth_access_token)
@@ -74,8 +74,8 @@ var getUserTimeLine = function (req, res) {
     var client = new Twitter({
         consumer_key: config.consumer_key,
         consumer_secret: config.consumer_secret,
-        access_token_key: req.session.oauth_access_token,
-        access_token_secret: req.session.oauth_access_token_secret
+        access_token_key: req.session.oauth_access_token_twitter,
+        access_token_secret: req.session.oauth_access_token_secret_twitter
     });
     var params = {screen_name: 'nodejs'};
     client.get('statuses/user_timeline', params, function(error, tweets, response){

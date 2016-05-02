@@ -2,8 +2,9 @@
   <h2>My Time line</h2>
   <ul class="sns-timeLine">
     <li *ngFor="#snsTimeLine of snsTimeLines">
-      <div class="badge">{{snsTimeLine.text}}</div>
-      <div>{{snsTimeLine.source}}</div>
+      <div *ngIf="type == 'twitter'" class="badge">{{snsTimeLine.text}}</div>
+      <div *ngIf="type == 'google'" class="badge">{{snsTimeLine.title}}</div>
+      <div>{{snsTimeLine.source || snsTimeLine.url}}</div>
     </li>
   </ul>
 </div>
